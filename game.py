@@ -35,13 +35,6 @@ class LoadState(BaseState):
     def __init__(self, renderer: Renderer):
         super().__init__()
         self.renderer: Renderer = renderer
-        self.renderer.register_image(SpriteRegistry.BACKGROUND, "assets/background.png")
-        self.renderer.register_image(SpriteRegistry.CRAFT, "assets/pxplayer.png")
-        self.renderer.register_image(SpriteRegistry.BULLET, "assets/bullets.png")
-        self.renderer.register_image(SpriteRegistry.ASTEROID, "assets/level1_sprites.png")
-        self.renderer.register_image(SpriteRegistry.EXPLOSION, "assets/explosion.png")
-        self.renderer.register_image(SpriteRegistry.FONTS, "assets/font.png")
-        self.renderer.register_image(SpriteRegistry.POWERUP, "assets/power-up.png")
         self.background: Background = Background()
         self.craft: Craft = Craft(renderer.bb_size)
 
@@ -77,7 +70,7 @@ class GetReadyState(BaseState):
         self.draw_score(renderer)
 
     def state(self) -> GameState:
-        if self.ticks < 100:
+        if self.ticks < 60:
             return self
         return PlayState(self, self.score)
 
@@ -101,7 +94,7 @@ class PlayState(BaseState):
         
         for powerup in self.__powerups:
             powerup.update(time)
-            if len(self.__powerups) > 10:
+            if len(self.__powerups) > 15:
                 await asyncio.sleep(0)
 
     def draw(self, renderer: Renderer) -> None:
@@ -113,15 +106,16 @@ class PlayState(BaseState):
 
     def state(self) -> GameState:
         if self.craft.is_alive() is False:
-            if self.__dead_tick > 100:
-                return GetReadyState(self, self.score)
+            if self.__dead_tick > 60:
+                from main_menu import GameOverState
+                return GameOverState(self.renderer, self.score)
             self.__dead_tick += 1
         return self
 
     async def check_collision(self) -> None:
         items = self.asteroids.collide(self.craft)
         for item in items:
-            if randint(1, 5) == 3:
+            if randint(1, 5) <= 4:
                 powerup = PowerUp()
                 powerup.rect.center = item.rect.center
                 self.__powerups.append(powerup)

@@ -28,7 +28,7 @@ class GameState(object):
 
 
 class Engine():
-    FPS = 30
+    FPS = 30  # Increased from 30 for smoother, faster gameplay
     GAME_EVENT = USEREVENT + 1
 
     def __init__(self, renderer: Renderer):
