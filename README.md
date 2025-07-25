@@ -8,6 +8,7 @@ A retro side-scrolling shooter game. Blast asteroids, collect power-ups, and sur
 - **Collect Power-Ups:** Grab powerups to enhance your weapons and abilities.
 
 ![GamePlay](https://hc-cdn.hel1.your-objectstorage.com/s/v3/294ee70e9d676c16aa10ef69efc8b4c0a60e7664_ezgif-4c1f5ebadcdf3d.gif)
+![GamePlay](https://github.com/user-attachments/assets/c840da1e-ed1c-408c-99ba-d42e558241af)
 
 ---
 
